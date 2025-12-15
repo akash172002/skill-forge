@@ -3,16 +3,8 @@ import api from "../../api/axios";
 import { toast } from "react-toastify";
 import ProjectListSkeleton from "../../components/ProjectListSkeleton";
 import StatusBadge from "../../components/StatusBadge";
-
-interface Project {
-  id: string;
-  title: string;
-  status: string;
-  score?: number;
-  feedback?: string;
-  certificateUrl?: string;
-  createdAt: string;
-}
+import ProjectTimeline from "../../components/ProjectTimeline";
+import type { Project } from "../../types/project";
 
 export default function MyProjects() {
   const [loading, setLoading] = useState(true);
@@ -75,6 +67,8 @@ export default function MyProjects() {
                 <p className="mt-1">{p.feedback}</p>
               </div>
             )}
+            <ProjectTimeline status={p.status as any} />
+
             {/* Certificate */}
             <div className="mt-4">
               {p.certificateUrl ? (

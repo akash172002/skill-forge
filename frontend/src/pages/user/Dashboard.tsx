@@ -3,11 +3,8 @@ import { useEffect, useState } from "react";
 import api from "../../api/axios";
 import PageSkeleton from "../../components/PageSkeleton";
 import { toast } from "react-toastify";
-
-interface Project {
-  id: string;
-  certificateUrl?: string;
-}
+import ProjectsChart from "../../components/ProjectsChart";
+import type { Project } from "../../types/project";
 
 export default function UserDashboard() {
   const [loading, setLoading] = useState(true);
@@ -27,7 +24,7 @@ export default function UserDashboard() {
   const totalCertificates = projects.filter((p) => p.certificateUrl).length;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-7xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">User Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -52,11 +49,9 @@ export default function UserDashboard() {
           <h2 className="font-semibold text-lg group-hover:text-blue-600">
             My Projects
           </h2>
-
           <div className="mt-4 text-3xl font-bold text-blue-600">
             {totalProjects}
           </div>
-
           <p className="text-sm text-gray-500 mt-1">Total submitted projects</p>
         </Link>
 
@@ -68,13 +63,15 @@ export default function UserDashboard() {
           <h2 className="font-semibold text-lg group-hover:text-green-600">
             Certificates Earned
           </h2>
-
           <div className="mt-4 text-3xl font-bold text-green-600">
             {totalCertificates}
           </div>
-
           <p className="text-sm text-gray-500 mt-1">Approved projects</p>
         </Link>
+      </div>
+
+      <div className="mt-10 bg-white rounded-xl shadow p-6">
+        <ProjectsChart projects={projects} />
       </div>
     </div>
   );
