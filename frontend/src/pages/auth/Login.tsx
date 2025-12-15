@@ -13,7 +13,7 @@ export default function Login() {
   const handleSubmit = async () => {
     try {
       const res = await api.post("/auth/login", { email, password });
-      login(res.data.token);
+      login(res.data.user, res.data.token);
       toast.success("Login successful 🎉");
       navigate("/dashboard");
     } catch (e: any) {

@@ -4,6 +4,7 @@ import { authorizeRole } from "../middlewares/role.middleware";
 import {
   getAllProject,
   getAllUser,
+  getSingleProject,
   reviewProject,
   updateProjectStatus,
 } from "../controllers/admin.controller";
@@ -24,6 +25,13 @@ router.patch(
   authMiddleware,
   authorizeRole(["ADMIN"]),
   updateProjectStatus
+);
+
+router.get(
+  "/projects/:projectId",
+  authMiddleware,
+  authorizeRole(["ADMIN"]),
+  getSingleProject
 );
 
 router.patch(

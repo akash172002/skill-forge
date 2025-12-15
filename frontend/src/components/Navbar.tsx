@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
 
 export default function Navbar() {
   const { isAuthenticated, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">

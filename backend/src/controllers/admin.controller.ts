@@ -21,7 +21,7 @@ export const getAllUser = async (_: Request, res: Response) => {
 };
 
 export const getAllProject = async (_: Request, res: Response) => {
-  const project = await prisma.project.findMany({
+  const projects = await prisma.project.findMany({
     include: {
       user: {
         select: {
@@ -33,6 +33,31 @@ export const getAllProject = async (_: Request, res: Response) => {
     },
     orderBy: { createdAt: "desc" },
   });
+
+  res.status(200).json(projects);
+};
+
+export const getSingleProject = async (req: Request, res: Response) => {
+  const { projectId } = req.params;
+
+  const project = await prisma.project.findUnique({
+    where: { id: projectId },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  if (!project) {
+    return res.status(404).json({ message: "Project not found" });
+  }
+
+  res.status(200).json(project);
 };
 
 export const updateProjectStatus = async (req: Request, res: Response) => {
@@ -62,7 +87,6 @@ export const reviewProject = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "Invalid status" });
   }
 
-  // ✅ 1. Update project & fetch user
   const project = await prisma.project.update({
     where: { id: projectId },
     data: {
