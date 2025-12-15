@@ -6,7 +6,6 @@ import adminRoutes from "./routes/admin.routes";
 import projectRoutes from "./routes/project.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import dashboardRoutes from "./routes/dashboard.routes";
-import devRoutes from "./routes/dev.routes";
 
 const app = express();
 
@@ -16,7 +15,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/dashboard", dashboardRoutes);
-app.use("/api/dev", devRoutes);
 
 app.use(errorHandler);
 
