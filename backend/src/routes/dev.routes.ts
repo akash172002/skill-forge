@@ -7,6 +7,15 @@ const router = Router();
 router.post("/create-admin", async (req, res) => {
   const { email, password, name } = req.body;
 
+  if (!email || !password || !name) {
+    return res.status(400).json({ message: "Missing fields" });
+  }
+
+  const existing = await prisma.user.findUnique({ where: { email } });
+  if (existing) {
+    return res.status(400).json({ message: "Admin already exists" });
+  }
+
   const hashed = await bcrypt.hash(password, 10);
 
   const admin = await prisma.user.create({
