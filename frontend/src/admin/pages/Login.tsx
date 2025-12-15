@@ -14,6 +14,7 @@ export default function AdminLogin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await api.post("/auth/login", { email, password });
@@ -31,6 +32,8 @@ export default function AdminLogin() {
     } catch (err: any) {
       console.error("Admin login failed:", err);
       toast.error(err.response?.data?.message || "Invalid credentials");
+    } finally {
+      setLoading(false);
     }
   };
 
